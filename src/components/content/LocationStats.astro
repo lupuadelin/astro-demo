@@ -10,11 +10,16 @@ interface Props {
 const { distances = defaultDistances, class: className = '', columns = 2 } = Astro.props;
 const cols = columns === 4 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2';
 ---
-<dl class:list={["grid gap-6", cols, className]}>
-  {distances.map((d, i) => (
-    <div class="reveal" style={`--reveal-delay:${i * 90}ms`}>
-      <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">{d.label}</dt>
-      <dd class="font-serif text-3xl mt-1"><span data-countup={d.value}>{d.value}</span></dd>
-    </div>
-  ))}
+
+<dl class:list={['grid gap-6', cols, className]}>
+  {
+    distances.map((d, i) => (
+      <div class="reveal" style={`--reveal-delay:${i * 90}ms`}>
+        <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">{d.label}</dt>
+        <dd class="font-serif text-3xl mt-1">
+          <span data-countup={d.value}>{d.value}</span>
+        </dd>
+      </div>
+    ))
+  }
 </dl>

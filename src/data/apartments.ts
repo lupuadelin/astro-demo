@@ -61,7 +61,16 @@ export const apartments: Apartment[] = [
     gradientAlt: 'linear-gradient(135deg,#C4BAA5,#7F826E)',
     description:
       'A compact one-room stay finished in chalk and copper tones. Blackout curtains, a soft-arch reading nook and a rainfall shower — everything you need for a two-night city break or a slower solo stay.',
-    inApartment: ['Nespresso', 'Filtered water', 'Rainfall shower', 'Blackout curtains', 'Fast Wi-Fi', 'Smart TV', 'Iron & board', 'Hair dryer'],
+    inApartment: [
+      'Nespresso',
+      'Filtered water',
+      'Rainfall shower',
+      'Blackout curtains',
+      'Fast Wi-Fi',
+      'Smart TV',
+      'Iron & board',
+      'Hair dryer',
+    ],
     complexAccess: ['Heated pool', 'Finnish sauna', 'Gym', 'Sports courts'],
   },
   {
@@ -80,7 +89,17 @@ export const apartments: Apartment[] = [
     gradientAlt: 'linear-gradient(135deg,#E7E1D0,#C4BAA5)',
     description:
       'A generous two-room suite with a king bedroom, an open living space and a west-facing balcony. Designed for couples who want a work corner or families of three-to-four sharing one apartment.',
-    inApartment: ['Full kitchen', 'Nespresso', 'Filtered water', 'Rainfall shower', 'Balcony', 'Blackout curtains', 'Fast Wi-Fi', 'Smart TV', 'Washer'],
+    inApartment: [
+      'Full kitchen',
+      'Nespresso',
+      'Filtered water',
+      'Rainfall shower',
+      'Balcony',
+      'Blackout curtains',
+      'Fast Wi-Fi',
+      'Smart TV',
+      'Washer',
+    ],
     complexAccess: ['Heated pool', 'Finnish sauna', 'Gym', 'Sports courts', 'Indoor recreation'],
   },
   {
@@ -99,13 +118,31 @@ export const apartments: Apartment[] = [
     gradientAlt: 'linear-gradient(135deg,#DDD5C5,#C4BAA5)',
     description:
       'The largest apartment in the complex — three rooms, two full baths, an eat-in kitchen and a wide south-facing living room that opens to the garden. Sized for families of five to six or two couples travelling together.',
-    inApartment: ['Full kitchen', 'Dishwasher', 'Nespresso', 'Filtered water', 'Two rainfall showers', 'Garden view', 'Blackout curtains', 'Fast Wi-Fi', 'Smart TV', 'Washer', 'Dryer'],
-    complexAccess: ['Heated pool', 'Finnish sauna', 'Gym', 'Sports courts', 'Indoor recreation', "Kids' play area"],
+    inApartment: [
+      'Full kitchen',
+      'Dishwasher',
+      'Nespresso',
+      'Filtered water',
+      'Two rainfall showers',
+      'Garden view',
+      'Blackout curtains',
+      'Fast Wi-Fi',
+      'Smart TV',
+      'Washer',
+      'Dryer',
+    ],
+    complexAccess: [
+      'Heated pool',
+      'Finnish sauna',
+      'Gym',
+      'Sports courts',
+      'Indoor recreation',
+      "Kids' play area",
+    ],
   },
 ];
 
-export const getApartmentBySlug = (slug: string) =>
-  apartments.find((a) => a.slug === slug);
+export const getApartmentBySlug = (slug: string) => apartments.find((a) => a.slug === slug);
 
 export const getSimilarApartments = (slug: string, count = 2) =>
   apartments.filter((a) => a.slug !== slug).slice(0, count);

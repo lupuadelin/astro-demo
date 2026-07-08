@@ -1,4 +1,93 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Self-hosted Cormorant Garamond + Mulish (Latin subset only, from @fontsource).
+   Files live in /public/fonts and are preloaded from Layout.astro so they're
+   already in the browser cache when first paint happens — no swap, no flicker.
+   font-display: block gives a tiny (<100 ms) block window; combined with the
+   preload above, the font is nearly always ready before that window ends. */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url('/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+  src: url('/fonts/cormorant-garamond-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: block;
+  src: url('/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-700-normal.woff2') format('woff2');
+}
+
+/* Belt-and-braces: metric-matched fallbacks. Rarely engaged since the woff2
+   files are preloaded, but if a slow connection ever misses the block window
+   these keep Georgia/Arial laid out at the branded font's box metrics. */
+@font-face {
+  font-family: 'Cormorant Fallback';
+  src: local('Georgia');
+  size-adjust: 90%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Mulish Fallback';
+  src: local('Arial');
+  size-adjust: 100%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
 
 @theme {
   /* Palette B — Petrol + Copper.
@@ -6,23 +95,23 @@
      so class strings across the codebase (bg-clay, text-espresso, border-sand) stay valid.
      They're just internal names now — the actual colors are petrol/copper/chalk. */
   /* Editorial sage — off-white, deep charcoal, muted botanical green, brass for warmth */
-  --color-bone: #F0EDE6;          /* Warm off-white — page bg (natural linen) */
-  --color-warm-white: #F8F5EE;    /* Lifted cream — card surface */
-  --color-espresso: #1F1E1A;      /* Deep warm charcoal — ink */
-  --color-clay: #6B7A5D;          /* Muted sage green — primary brand */
-  --color-clay-hover: #4E5A44;    /* Sage deep */
-  --color-clay-soft: #B39355;     /* Brass — dark-bg accents + star ratings */
-  --color-cta: #6B7A5D;           /* Same sage — no separate CTA colour (kept for compat) */
-  --color-cta-hover: #4E5A44;
-  --color-sage: #6B7A5D;
-  --color-sand: #DDD5C5;          /* Warm sand — border */
-  --color-sand-strong: #C4BAA5;
-  --color-muted: #6E655C;         /* Warm gray — secondary text */
-  --color-muted-soft: #9C9285;
-  --color-cream: #E7E1D0;         /* Deeper offset — banded sections */
+  --color-bone: #f0ede6; /* Warm off-white — page bg (natural linen) */
+  --color-warm-white: #f8f5ee; /* Lifted cream — card surface */
+  --color-espresso: #1f1e1a; /* Deep warm charcoal — ink */
+  --color-clay: #6b7a5d; /* Muted sage green — primary brand */
+  --color-clay-hover: #4e5a44; /* Sage deep */
+  --color-clay-soft: #b39355; /* Brass — dark-bg accents + star ratings */
+  --color-cta: #6b7a5d; /* Same sage — no separate CTA colour (kept for compat) */
+  --color-cta-hover: #4e5a44;
+  --color-sage: #6b7a5d;
+  --color-sand: #ddd5c5; /* Warm sand — border */
+  --color-sand-strong: #c4baa5;
+  --color-muted: #6e655c; /* Warm gray — secondary text */
+  --color-muted-soft: #9c9285;
+  --color-cream: #e7e1d0; /* Deeper offset — banded sections */
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Mulish", system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, serif;
+  --font-sans: 'Mulish', 'Mulish Fallback', system-ui, -apple-system, sans-serif;
 
   --radius-arch: 50% 50% 8px 8px;
 
@@ -42,7 +131,7 @@
     scroll-behavior: smooth;
   }
   ::selection {
-    background: #CCD3BE;
+    background: #ccd3be;
   }
   a {
     color: var(--color-clay);
@@ -68,19 +157,6 @@
   transform: translateY(0);
 }
 
-/* Reveal variants: sideways or scale */
-.reveal-x {
-  opacity: 0;
-  transform: translateX(-14px);
-  transition:
-    opacity 800ms var(--ease-luxe),
-    transform 800ms var(--ease-luxe);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.reveal-x.is-revealed {
-  opacity: 1;
-  transform: translateX(0);
-}
 .reveal-scale {
   opacity: 0;
   transform: scale(0.97);
@@ -109,8 +185,14 @@
   transform: none;
 }
 @keyframes heroWord {
-  from { opacity: 0; transform: translateY(0.35em); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Underline sweep on the clay italic phrase inside the hero H1 */
@@ -146,14 +228,16 @@
 .lift:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 24px 44px -26px rgba(0, 128, 128, 0.20),
-    0 4px 12px -6px rgba(31, 41, 55, 0.10);
+    0 24px 44px -26px rgba(0, 128, 128, 0.2),
+    0 4px 12px -6px rgba(31, 41, 55, 0.1);
   border-color: color-mix(in oklab, var(--color-clay) 32%, var(--color-sand));
 }
 
 /* ================= Softer image hover ================= */
 .img-zoom {
-  transition: transform 900ms var(--ease-luxe), filter 600ms var(--ease-luxe);
+  transition:
+    transform 900ms var(--ease-luxe),
+    filter 600ms var(--ease-luxe);
   will-change: transform;
 }
 .group:hover .img-zoom {
@@ -183,13 +267,48 @@
   opacity: 0.75;
 }
 
+/* ================= Kill Astro ClientRouter cross-fade =================
+   The default View Transitions cross-fade keeps a snapshot of the old page
+   painted on top of the new DOM for ~250ms. On mobile it reads as the previous
+   title/header "flickering" during the swap. We keep <ClientRouter /> for its
+   JS lifecycle (astro:page-load, astro:after-swap) but zero out the visual
+   fade so navigations look like instant swaps. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none !important;
+  mix-blend-mode: normal;
+}
+
+/* ================= Mobile: skip intro fades entirely =================
+   On mobile, page navigation is a full reload (see animations.ts). If reveals
+   start at opacity:0, every new page fades in from blank — reads as a flicker
+   during nav. The JS already tries to skip the animation by adding `is-revealed`
+   instantly, but the CSS transition still runs the 800ms fade. Solve at the
+   source: on mobile, keep everything visible at rest, no transitions. */
+@media (max-width: 767px) {
+  .reveal,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  [data-hero-h1] .word {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  [data-hero-h1] .hero-em::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+}
+
 /* ================= Respect reduced motion ================= */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .reveal,
-  .reveal-x,
   .reveal-scale,
   [data-hero-h1] .word,
   [data-hero-h1] .hero-em::after {
@@ -212,4 +331,3 @@
     transform: none !important;
   }
 }
-

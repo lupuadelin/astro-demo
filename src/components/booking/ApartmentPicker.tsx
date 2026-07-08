@@ -67,7 +67,9 @@ export default function ApartmentPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
       >
-        <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mb-1">{label}</span>
+        <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mb-1">
+          {label}
+        </span>
         <span className="flex items-center gap-3">
           <span
             className="w-6 h-6 rounded-full flex-shrink-0"
@@ -116,9 +118,13 @@ export default function ApartmentPicker({
                     aria-hidden="true"
                   />
                   <span className="min-w-0 flex-1">
-                    <span className="block font-serif text-lg text-espresso truncate">{opt.name}</span>
+                    <span className="block font-serif text-lg text-espresso truncate">
+                      {opt.name}
+                    </span>
                     <span className="block text-[11px] text-muted-soft truncate">
-                      {opt.slug ? `${opt.type}${opt.size ? ` · ${opt.size}` : ''}${opt.guests ? ` · ${opt.guests} guests` : ''}` : opt.type}
+                      {opt.slug
+                        ? `${opt.type}${opt.size ? ` · ${opt.size}` : ''}${opt.guests ? ` · ${opt.guests} guests` : ''}`
+                        : opt.type}
                     </span>
                   </span>
                   {active && <span className="text-clay text-sm">✓</span>}

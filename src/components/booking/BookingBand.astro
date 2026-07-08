@@ -31,29 +31,40 @@ const {
   photoAlt = 'A YamaLuxe apartment',
 } = Astro.props;
 ---
+
 <section id="booking" class="py-16">
   <Container>
-    <div class="bg-espresso text-bone rounded-3xl overflow-hidden grid gap-10 lg:grid-cols-[1.1fr_0.9fr] p-8 md:p-14">
+    <div
+      class="bg-espresso text-bone rounded-3xl overflow-hidden grid gap-10 lg:grid-cols-[1.1fr_0.9fr] p-8 md:p-14"
+    >
       <div class="flex flex-col justify-center">
-        <div class="text-[11px] uppercase tracking-[0.22em] text-clay-soft font-bold mb-4">{eyebrow}</div>
+        <div class="text-[11px] uppercase tracking-[0.22em] text-clay-soft font-bold mb-4">
+          {eyebrow}
+        </div>
         <h2 class="font-serif font-medium text-4xl md:text-5xl leading-[1.05]">{title}</h2>
         <p class="mt-6 max-w-lg text-cream/80">{body}</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <Button href={primaryHref} variant="primary">{primaryLabel}</Button>
-          <a href={secondaryHref} class="inline-flex items-center px-2 py-3 text-bone/80 hover:text-bone text-sm font-bold">{secondaryLabel}</a>
+          <a
+            href={secondaryHref}
+            class="inline-flex items-center px-2 py-3 text-bone/80 hover:text-bone text-sm font-bold"
+            >{secondaryLabel}</a
+          >
         </div>
       </div>
       <div class="flex justify-center items-center">
         <div class="w-full max-w-sm overflow-hidden bg-sand/20 rounded-2xl aspect-[4/5]">
-          {photo && (
-            <Image
-              src={photo}
-              alt={photoAlt}
-              widths={[300, 500, 700]}
-              sizes="(min-width: 1024px) 380px, 60vw"
-              class="w-full h-full object-cover"
-            />
-          )}
+          {
+            photo && (
+              <Image
+                src={photo}
+                alt={photoAlt}
+                widths={[300, 500, 700]}
+                sizes="(min-width: 1024px) 380px, 60vw"
+                class="w-full h-full object-cover"
+              />
+            )
+          }
         </div>
       </div>
     </div>

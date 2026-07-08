@@ -7,25 +7,38 @@ import GuestPicker from '../../components/booking/GuestPicker.tsx';
 import { apartments } from '../../data/apartments';
 
 const types = ['All', 'Studio', '2-room', '3-room'];
-const amenityChips = ['Pool access', 'Sauna access', 'Balcony', 'Full kitchen', 'Two baths', 'Nespresso'];
+const amenityChips = [
+  'Pool access',
+  'Sauna access',
+  'Balcony',
+  'Full kitchen',
+  'Two baths',
+  'Nespresso',
+];
 ---
-<Layout title="Apartments — YamaLuxe">
 
+<Layout title="Apartments — YamaLuxe">
   <!-- Compact hero -->
   <section class="pt-14 md:pt-20 pb-10">
     <Container>
       <div class="text-[13px] uppercase tracking-[0.22em] text-clay font-bold mb-5">Apartments</div>
-      <h1 class="font-serif font-medium text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
+      <h1
+        class="font-serif font-medium text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl"
+      >
         Three apartments. One standard.
       </h1>
       <p class="mt-6 max-w-xl text-lg text-muted leading-relaxed">
-        Studios and family-sized. Every apartment includes pool, sauna and gym access — nothing to add at checkout.
+        Studios and family-sized. Every apartment includes pool, sauna and gym access — nothing to
+        add at checkout.
       </p>
     </Container>
   </section>
 
   <!-- Sticky filter bar -->
-  <div class="sticky z-30 bg-bone/85 backdrop-blur border-y border-sand" style="top: var(--header-h, 68px);">
+  <div
+    class="sticky z-30 bg-bone/85 backdrop-blur border-y border-sand"
+    style="top: var(--header-h, 68px);"
+  >
     <Container class="py-4">
       <form
         id="apt-filters"
@@ -33,41 +46,65 @@ const amenityChips = ['Pool access', 'Sauna access', 'Balcony', 'Full kitchen', 
         aria-label="Apartment filters"
       >
         <!-- Type -->
-        <div class="flex items-center gap-2 flex-wrap" role="radiogroup" aria-label="Apartment type">
-          <span class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mr-1">Type</span>
-          {types.map((t, i) => (
-            <label class="cursor-pointer">
-              <input type="radio" name="type" value={t} class="sr-only peer" checked={i === 0} />
-              <span class="inline-block px-4 py-2 rounded-full border border-sand text-espresso font-semibold text-xs
+        <div
+          class="flex items-center gap-2 flex-wrap"
+          role="radiogroup"
+          aria-label="Apartment type"
+        >
+          <span class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mr-1"
+            >Type</span
+          >
+          {
+            types.map((t, i) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="type" value={t} class="sr-only peer" checked={i === 0} />
+                <span
+                  class="inline-block px-4 py-2 rounded-full border border-sand text-espresso font-semibold text-xs
                 peer-checked:bg-clay peer-checked:text-white peer-checked:border-clay
-                hover:border-clay transition-colors">{t}</span>
-            </label>
-          ))}
+                hover:border-clay transition-colors"
+                >
+                  {t}
+                </span>
+              </label>
+            ))
+          }
         </div>
 
         <span class="hidden md:block w-px h-6 bg-sand"></span>
 
         <!-- Guests — used as minimum-capacity filter -->
         <div class="w-full md:w-[180px]">
-          <GuestPicker variant="field" name="guests" maxTotal={8} client:load />
+          <GuestPicker variant="field" name="guests" maxTotal={8} client:visible />
         </div>
 
         <span class="hidden md:block w-px h-6 bg-sand"></span>
 
         <!-- Amenity chips -->
         <div class="flex items-center gap-2 flex-wrap" role="group" aria-label="Amenity chips">
-          <span class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mr-1">Amenities</span>
-          {amenityChips.map((a) => (
-            <label class="cursor-pointer">
-              <input type="checkbox" name="amenity" value={a} class="sr-only peer" />
-              <span class="inline-block px-3 py-1.5 rounded-full border border-sand text-espresso font-semibold text-xs
+          <span class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mr-1"
+            >Amenities</span
+          >
+          {
+            amenityChips.map((a) => (
+              <label class="cursor-pointer">
+                <input type="checkbox" name="amenity" value={a} class="sr-only peer" />
+                <span
+                  class="inline-block px-3 py-1.5 rounded-full border border-sand text-espresso font-semibold text-xs
                 peer-checked:bg-espresso peer-checked:text-bone peer-checked:border-espresso
-                hover:border-clay transition-colors">{a}</span>
-            </label>
-          ))}
+                hover:border-clay transition-colors"
+                >
+                  {a}
+                </span>
+              </label>
+            ))
+          }
         </div>
 
-        <button type="button" id="apt-reset" class="ml-auto text-xs font-bold text-clay hover:text-clay-hover">Reset</button>
+        <button
+          type="button"
+          id="apt-reset"
+          class="ml-auto text-xs font-bold text-clay hover:text-clay-hover">Reset</button
+        >
       </form>
     </Container>
   </div>
@@ -76,7 +113,9 @@ const amenityChips = ['Pool access', 'Sauna access', 'Balcony', 'Full kitchen', 
   <section class="py-12 md:py-16">
     <Container>
       <div class="flex items-baseline mb-8">
-        <div class="text-sm text-muted"><span id="apt-count" class="text-espresso font-bold">{apartments.length}</span> apartments</div>
+        <div class="text-sm text-muted">
+          <span id="apt-count" class="text-espresso font-bold">{apartments.length}</span> apartments
+        </div>
       </div>
 
       <div id="apt-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -91,7 +130,6 @@ const amenityChips = ['Pool access', 'Sauna access', 'Balcony', 'Full kitchen', 
   </section>
 
   <BookingBand />
-
 </Layout>
 
 <script>

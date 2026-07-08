@@ -27,20 +27,23 @@ const photos = getApartmentPhotos(apt.slug);
 const lead = photos[0];
 const secondary = photos[1];
 const tertiary = photos[2];
-const restCount = Math.max(0, photos.length - 3);
 
 // Pre-resolve full-size URLs for the PhotoSwipe lightbox (bigger images than the thumbnail widths above).
 const fullSize = await Promise.all(
   photos.map(async (src) => {
     const opt = await getImage({ src, format: 'webp', width: 1920 });
-    return { url: opt.src, width: opt.attributes.width ?? 1920, height: opt.attributes.height ?? 1080 };
+    return {
+      url: opt.src,
+      width: opt.attributes.width ?? 1920,
+      height: opt.attributes.height ?? 1080,
+    };
   }),
 );
 
 const aptReviews = getReviews(2, apt.slug);
 ---
-<Layout title={`${apt.name} — YamaLuxe`}>
 
+<Layout title={`${apt.name} — YamaLuxe`}>
   <!-- Breadcrumb -->
   <Container class="pt-8 text-xs text-muted-soft">
     <a href="/apartments" class="hover:text-clay">← All apartments</a>
@@ -50,56 +53,78 @@ const aptReviews = getReviews(2, apt.slug);
   <section class="pt-6 pb-12">
     <Container>
       <div id="apt-gallery" class="grid gap-4 md:grid-cols-[1.6fr_1fr]">
-        {lead && (
-          <a
-            href={fullSize[0].url}
-            data-pswp-width={fullSize[0].width}
-            data-pswp-height={fullSize[0].height}
-            class="reveal-scale block group rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[16/11] bg-sand relative"
-          >
-            <Image
-              src={lead}
-              alt={`${apt.name} — main view`}
-              widths={[600, 900, 1400]}
-              sizes="(min-width: 768px) 62vw, 100vw"
-              class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-            />
-          </a>
-        )}
+        {
+          lead && (
+            <a
+              href={fullSize[0].url}
+              data-pswp-width={fullSize[0].width}
+              data-pswp-height={fullSize[0].height}
+              class="reveal-scale block group rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[16/11] bg-sand relative"
+            >
+              <Image
+                src={lead}
+                alt={`${apt.name} — main view`}
+                widths={[600, 900, 1400]}
+                sizes="(min-width: 768px) 62vw, 100vw"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+              />
+            </a>
+          )
+        }
 
         <div class="grid grid-cols-2 md:grid-cols-1 md:grid-rows-2 gap-4">
-          {secondary && (
-            <a
-              href={fullSize[1].url}
-              data-pswp-width={fullSize[1].width}
-              data-pswp-height={fullSize[1].height}
-              class="block group rounded-2xl overflow-hidden aspect-[4/3] bg-sand"
-            >
-              <Image src={secondary} alt={`${apt.name} — detail`} widths={[300, 500, 700]} sizes="(min-width: 768px) 30vw, 45vw" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
-            </a>
-          )}
-          {tertiary && (
-            <a
-              href={fullSize[2].url}
-              data-pswp-width={fullSize[2].width}
-              data-pswp-height={fullSize[2].height}
-              class="block group rounded-2xl overflow-hidden aspect-[4/3] bg-sand"
-            >
-              <Image src={tertiary} alt={`${apt.name} — detail`} widths={[300, 500, 700]} sizes="(min-width: 768px) 30vw, 45vw" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
-            </a>
-          )}
+          {
+            secondary && (
+              <a
+                href={fullSize[1].url}
+                data-pswp-width={fullSize[1].width}
+                data-pswp-height={fullSize[1].height}
+                class="block group rounded-2xl overflow-hidden aspect-[4/3] bg-sand"
+              >
+                <Image
+                  src={secondary}
+                  alt={`${apt.name} — detail`}
+                  widths={[300, 500, 700]}
+                  sizes="(min-width: 768px) 30vw, 45vw"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                />
+              </a>
+            )
+          }
+          {
+            tertiary && (
+              <a
+                href={fullSize[2].url}
+                data-pswp-width={fullSize[2].width}
+                data-pswp-height={fullSize[2].height}
+                class="block group rounded-2xl overflow-hidden aspect-[4/3] bg-sand"
+              >
+                <Image
+                  src={tertiary}
+                  alt={`${apt.name} — detail`}
+                  widths={[300, 500, 700]}
+                  sizes="(min-width: 768px) 30vw, 45vw"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                />
+              </a>
+            )
+          }
         </div>
 
         <!-- Hidden anchors for remaining photos so they open in the lightbox but aren't shown in the grid -->
-        {photos.slice(3).map((_, i) => (
-          <a
-            href={fullSize[i + 3].url}
-            data-pswp-width={fullSize[i + 3].width}
-            data-pswp-height={fullSize[i + 3].height}
-            class="hidden"
-            aria-hidden="true"
-          />
-        ))}
+        {
+          photos.slice(3).map((_, i) => (
+            <a
+              href={fullSize[i + 3].url}
+              data-pswp-width={fullSize[i + 3].width}
+              data-pswp-height={fullSize[i + 3].height}
+              class="hidden"
+              aria-hidden="true"
+            >
+              <span class="sr-only">Photo {i + 4}</span>
+            </a>
+          ))
+        }
       </div>
       <div class="mt-3 flex items-center gap-3">
         <button
@@ -118,25 +143,37 @@ const aptReviews = getReviews(2, apt.slug);
     <Container>
       <div class="grid gap-10 lg:grid-cols-[1.4fr_0.9fr] lg:gap-16">
         <div>
-          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">{apt.type} · Bucharest</div>
-          <h1 class="font-serif font-medium text-5xl md:text-[56px] leading-[1.05] tracking-tight">{apt.name}</h1>
+          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">
+            {apt.type} · Bucharest
+          </div>
+          <h1 class="font-serif font-medium text-5xl md:text-[56px] leading-[1.05] tracking-tight">
+            {apt.name}
+          </h1>
           <p class="mt-4 text-lg text-muted">{apt.tagline}</p>
 
           <dl class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-sand py-8">
             <div>
-              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">Size</dt>
+              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">
+                Size
+              </dt>
               <dd class="font-serif text-2xl mt-1">{apt.size}</dd>
             </div>
             <div>
-              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">Sleeps</dt>
+              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">
+                Sleeps
+              </dt>
               <dd class="font-serif text-2xl mt-1">{apt.guests} guests</dd>
             </div>
             <div>
-              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">Beds</dt>
+              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">
+                Beds
+              </dt>
               <dd class="font-serif text-2xl mt-1">{apt.beds}</dd>
             </div>
             <div>
-              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">Baths</dt>
+              <dt class="text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold">
+                Baths
+              </dt>
               <dd class="font-serif text-2xl mt-1">{apt.baths}</dd>
             </div>
           </dl>
@@ -149,15 +186,33 @@ const aptReviews = getReviews(2, apt.slug);
           <!-- Amenities -->
           <div class="mt-14 grid gap-10 md:grid-cols-2">
             <div>
-              <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">In the apartment</div>
+              <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">
+                In the apartment
+              </div>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm">
-                {apt.inApartment.map((a) => <li class="flex items-center gap-2"><span class="text-clay">·</span>{a}</li>)}
+                {
+                  apt.inApartment.map((a) => (
+                    <li class="flex items-center gap-2">
+                      <span class="text-clay">·</span>
+                      {a}
+                    </li>
+                  ))
+                }
               </ul>
             </div>
             <div>
-              <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">In the complex</div>
+              <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">
+                In the complex
+              </div>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm">
-                {apt.complexAccess.map((a) => <li class="flex items-center gap-2"><span class="text-clay">·</span>{a}</li>)}
+                {
+                  apt.complexAccess.map((a) => (
+                    <li class="flex items-center gap-2">
+                      <span class="text-clay">·</span>
+                      {a}
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>
@@ -165,7 +220,10 @@ const aptReviews = getReviews(2, apt.slug);
 
         <!-- Sticky booking widget -->
         <aside class="lg:sticky lg:self-start" style="top: calc(var(--header-h, 68px) + 24px);">
-          <div class="reveal bg-warm-white border border-sand rounded-2xl p-6 shadow-[0_1px_0_rgba(180,116,79,0.06)]" style="--reveal-delay:120ms">
+          <div
+            class="reveal bg-warm-white border border-sand rounded-2xl p-6 shadow-[0_1px_0_rgba(180,116,79,0.06)]"
+            style="--reveal-delay:120ms"
+          >
             <div class="flex items-baseline justify-between">
               <div>
                 <span class="font-serif text-3xl">€{apt.priceFrom}</span>
@@ -174,10 +232,12 @@ const aptReviews = getReviews(2, apt.slug);
               <div class="text-xs text-muted-soft">Best rate · direct</div>
             </div>
             <form class="mt-5 space-y-3">
-              <DateRangePicker variant="stack" client:load align="right" />
-              <GuestPicker variant="field" maxTotal={apt.guests} align="right" client:load />
+              <DateRangePicker variant="stack" client:visible align="right" />
+              <GuestPicker variant="field" maxTotal={apt.guests} align="right" client:visible />
               <Button variant="primary" class="w-full">Reserve now</Button>
-              <p class="text-[11px] text-muted-soft text-center">You will not be charged yet — availability check first.</p>
+              <p class="text-[11px] text-muted-soft text-center">
+                You will not be charged yet — availability check first.
+              </p>
             </form>
             <div class="mt-5 pt-5 border-t border-sand text-xs text-muted space-y-1">
               <div>✦ Free cancellation up to 48h</div>
@@ -201,7 +261,13 @@ const aptReviews = getReviews(2, apt.slug);
             intro="A residential enclave with quick lines to the airport and the old town — parking, security, and 24/7 access."
           />
         </div>
-        <Map lat={location.lat} lng={location.lng} zoom={15} height="aspect-[4/5] sm:aspect-square md:aspect-[16/9]" markerTitle={apt.name} />
+        <Map
+          lat={location.lat}
+          lng={location.lng}
+          zoom={15}
+          height="aspect-[4/5] sm:aspect-square md:aspect-[16/9]"
+          markerTitle={apt.name}
+        />
       </div>
     </Container>
   </section>
@@ -209,30 +275,42 @@ const aptReviews = getReviews(2, apt.slug);
   <!-- 04 · REVIEWS — compact, no section heading (Home carries the reviews section) -->
   <section class="py-12">
     <Container>
-      <div class="text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold mb-6">Stayed here</div>
+      <div class="text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold mb-6">
+        Stayed here
+      </div>
       <ReviewsGrid reviews={aptReviews} tone="warm" />
     </Container>
   </section>
 
   <!-- 05 · SIMILAR -->
-  {similar.length > 0 && (
-    <section class="py-16 bg-warm-white border-y border-sand">
-      <Container>
-        <SectionHeading eyebrow="Similar apartments" title="You might also like." />
-        <div class="mt-10 grid gap-6 md:grid-cols-2">
-          {similar.map((a) => <ApartmentCard apt={a} />)}
-        </div>
-      </Container>
-    </section>
-  )}
+  {
+    similar.length > 0 && (
+      <section class="py-16 bg-warm-white border-y border-sand">
+        <Container>
+          <SectionHeading eyebrow="Similar apartments" title="You might also like." />
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            {similar.map((a) => (
+              <ApartmentCard apt={a} />
+            ))}
+          </div>
+        </Container>
+      </section>
+    )
+  }
 
   <BookingBand />
 
   <!-- Mobile-only sticky book bar (Airbnb/Booking pattern) -->
-  <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-warm-white/95 backdrop-blur border-t border-sand px-4 py-3 flex items-center justify-between gap-3 shadow-[0_-4px_16px_-8px_rgba(31,30,26,0.10)]">
+  <div
+    class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-warm-white/95 backdrop-blur border-t border-sand px-4 py-3 flex items-center justify-between gap-3 shadow-[0_-4px_16px_-8px_rgba(31,30,26,0.10)]"
+  >
     <div>
-      <div class="font-serif text-xl leading-none">€{apt.priceFrom}<span class="text-muted text-sm font-sans"> / night</span></div>
-      <div class="text-[10px] uppercase tracking-[0.18em] text-muted-soft font-bold mt-1">Best rate · direct</div>
+      <div class="font-serif text-xl leading-none">
+        €{apt.priceFrom}<span class="text-muted text-sm font-sans"> / night</span>
+      </div>
+      <div class="text-[10px] uppercase tracking-[0.18em] text-muted-soft font-bold mt-1">
+        Best rate · direct
+      </div>
     </div>
     <a
       href="#booking"
@@ -243,7 +321,6 @@ const aptReviews = getReviews(2, apt.slug);
   </div>
   <!-- Spacer so the sticky bar doesn't cover the footer content -->
   <div class="lg:hidden h-20" aria-hidden="true"></div>
-
 </Layout>
 
 <script>
@@ -271,10 +348,10 @@ const aptReviews = getReviews(2, apt.slug);
 
 <style is:global>
   .pswp {
-    --pswp-bg: #1F1E1A;
-    --pswp-placeholder-bg: #3A342E;
-    --pswp-icon-color: #F5F1E8;
-    --pswp-icon-color-secondary: #1F1E1A;
-    --pswp-icon-stroke-color: #1F1E1A;
+    --pswp-bg: #1f1e1a;
+    --pswp-placeholder-bg: #3a342e;
+    --pswp-icon-color: #f5f1e8;
+    --pswp-icon-color-secondary: #1f1e1a;
+    --pswp-icon-stroke-color: #1f1e1a;
   }
 </style>
