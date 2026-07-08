@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette B — Petrol + Copper.
+     Token names are intentionally kept from the previous palette (clay/espresso/bone/sand)
+     so class strings across the codebase (bg-clay, text-espresso, border-sand) stay valid.
+     They're just internal names now — the actual colors are petrol/copper/chalk. */
+  /* Editorial sage — off-white, deep charcoal, muted botanical green, brass for warmth */
+  --color-bone: #F0EDE6;          /* Warm off-white — page bg (natural linen) */
+  --color-warm-white: #F8F5EE;    /* Lifted cream — card surface */
+  --color-espresso: #1F1E1A;      /* Deep warm charcoal — ink */
+  --color-clay: #6B7A5D;          /* Muted sage green — primary brand */
+  --color-clay-hover: #4E5A44;    /* Sage deep */
+  --color-clay-soft: #B39355;     /* Brass — dark-bg accents + star ratings */
+  --color-cta: #6B7A5D;           /* Same sage — no separate CTA colour (kept for compat) */
+  --color-cta-hover: #4E5A44;
+  --color-sage: #6B7A5D;
+  --color-sand: #DDD5C5;          /* Warm sand — border */
+  --color-sand-strong: #C4BAA5;
+  --color-muted: #6E655C;         /* Warm gray — secondary text */
+  --color-muted-soft: #9C9285;
+  --color-cream: #E7E1D0;         /* Deeper offset — banded sections */
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Mulish", system-ui, -apple-system, sans-serif;
+
+  --radius-arch: 50% 50% 8px 8px;
+
+  --container-page: 1120px;
+}
+
+@layer base {
+  :root {
+    --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  html {
+    background: var(--color-bone);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: #CCD3BE;
+  }
+  a {
+    color: var(--color-clay);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-clay-hover);
+  }
+}
+
+/* ================= Scroll reveal ================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 800ms var(--ease-luxe),
+    transform 800ms var(--ease-luxe);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reveal variants: sideways or scale */
+.reveal-x {
+  opacity: 0;
+  transform: translateX(-14px);
+  transition:
+    opacity 800ms var(--ease-luxe),
+    transform 800ms var(--ease-luxe);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-x.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 900ms var(--ease-luxe),
+    transform 900ms var(--ease-luxe);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-scale.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ================= Hero H1 word stagger ================= */
+[data-hero-h1] .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.35em);
+  will-change: opacity, transform;
+}
+[data-hero-h1].is-h1-play .word {
+  animation: heroWord 900ms var(--ease-luxe) both;
+}
+[data-hero-h1].is-h1-static .word {
+  opacity: 1;
+  transform: none;
+}
+@keyframes heroWord {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Underline sweep on the clay italic phrase inside the hero H1 */
+[data-hero-h1] .hero-em {
+  position: relative;
+  padding-bottom: 0.05em;
+}
+[data-hero-h1] .hero-em::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1200ms var(--ease-luxe);
+  transition-delay: 700ms;
+}
+[data-hero-h1].is-h1-play em::after {
+  transform: scaleX(1);
+}
+
+/* ================= Card hover lift ================= */
+.lift {
+  transition:
+    transform 500ms var(--ease-luxe),
+    box-shadow 500ms var(--ease-luxe),
+    border-color 300ms var(--ease-standard);
+  will-change: transform, box-shadow;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 44px -26px rgba(0, 128, 128, 0.20),
+    0 4px 12px -6px rgba(31, 41, 55, 0.10);
+  border-color: color-mix(in oklab, var(--color-clay) 32%, var(--color-sand));
+}
+
+/* ================= Softer image hover ================= */
+.img-zoom {
+  transition: transform 900ms var(--ease-luxe), filter 600ms var(--ease-luxe);
+  will-change: transform;
+}
+.group:hover .img-zoom {
+  transform: scale(1.045);
+  filter: saturate(1.05);
+}
+
+/* ================= Section divider signature ================= */
+.divider-dot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--color-sand-strong);
+}
+.divider-dot::before,
+.divider-dot::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.divider-dot span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-clay);
+  opacity: 0.75;
+}
+
+/* ================= Respect reduced motion ================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal-x,
+  .reveal-scale,
+  [data-hero-h1] .word,
+  [data-hero-h1] .hero-em::after {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .lift {
+    transition: none !important;
+  }
+  .lift:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .img-zoom {
+    transition: none !important;
+  }
+  .group:hover .img-zoom {
+    transform: none !important;
+  }
+}
+

@@ -1,0 +1,22 @@
+---
+interface Props {
+  tone?: 'clay' | 'bone';
+  size?: 'sm' | 'md';
+}
+const { tone = 'clay', size = 'md' } = Astro.props;
+const strokeColor = tone === 'clay' ? '#6B7A5D' : '#F0EDE6';
+const textColor = tone === 'clay' ? 'text-espresso' : 'text-bone';
+const dims = size === 'sm' ? { w: 28, h: 36, dot: 5, pad: 6, text: 'text-lg' } : { w: 34, h: 44, dot: 6, pad: 7, text: 'text-2xl' };
+---
+<a href="/" class:list={["flex items-center gap-3", textColor]} aria-label="YamaLuxe home">
+  <span
+    class="flex items-end justify-center"
+    style={`width:${dims.w}px; height:${dims.h}px; border-radius:17px 17px 3px 3px; border:1.5px solid ${strokeColor}; padding-bottom:${dims.pad}px;`}
+  >
+    <span
+      class="rounded-full"
+      style={`width:${dims.dot}px; height:${dims.dot}px; background:${strokeColor};`}
+    ></span>
+  </span>
+  <span class:list={["font-serif font-semibold uppercase tracking-[0.08em]", dims.text]}>YamaLuxe</span>
+</a>

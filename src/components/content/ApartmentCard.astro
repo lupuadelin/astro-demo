@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import type { Apartment } from '../../data/apartments';
+import { getApartmentPhotos } from '../../data/apartments';
+
+interface Props {
+  apt: Apartment;
+}
+const { apt } = Astro.props;
+const photos = getApartmentPhotos(apt.slug);
+const hero = photos[0];
+---
+<a
+  href={`/apartments/${apt.slug}`}
+  class="group lift flex flex-col bg-warm-white border border-sand rounded-2xl overflow-hidden"
+  data-apt-card
+  data-type={apt.type}
+  data-guests={apt.guests}
+  data-amenities={[...apt.highlights, ...apt.complexAccess].join('|').toLowerCase()}
+>
+  <div class="relative aspect-4/3 bg-sand overflow-hidden">
+    {hero ? (
+      <Image
+        src={hero}
+        alt={`${apt.name} — main view`}
+        widths={[400, 600, 800]}
+        sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 90vw"
+        class="img-zoom w-full h-full object-cover"
+      />
+    ) : (
+      <div class="w-full h-full" style={`background:${apt.gradient};`}></div>
+    )}
+    <span class="absolute top-3 left-3 bg-warm-white/95 backdrop-blur text-espresso text-[11px] font-bold px-3 py-1 rounded-full">{apt.type}</span>
+  </div>
+  <div class="p-5 flex flex-col flex-1">
+    <div class="font-serif text-2xl">{apt.name}</div>
+    <div class="text-xs text-muted mt-1">{apt.size} · {apt.guests} guests</div>
+    <div class="mt-3 text-xs text-muted-soft flex flex-wrap gap-x-3 gap-y-1">
+      {apt.highlights.map((h) => <span>· {h}</span>)}
+    </div>
+    <div class="mt-auto pt-5 flex items-center justify-between">
+      <div class="text-sm"><strong>from €{apt.priceFrom}</strong><span class="text-muted"> / night</span></div>
+      <span class="text-clay text-sm font-bold group-hover:translate-x-1 transition-transform">View →</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,45 @@
+---
+interface Props {
+  lat: number;
+  lng: number;
+  zoom?: number;
+  height?: string;
+  markerTitle?: string;
+  class?: string;
+}
+const {
+  lat,
+  lng,
+  zoom = 15,
+  height = 'aspect-[16/9]',
+  markerTitle = 'YamaLuxe Apartments',
+  class: className = '',
+} = Astro.props;
+
+// Google Maps free legacy embed — no API key needed.
+const embedSrc = `https://maps.google.com/maps?q=${lat},${lng}&hl=en&z=${zoom}&output=embed`;
+const openSrc = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+---
+<div
+  class:list={[
+    'relative rounded-2xl overflow-hidden border border-sand bg-cream',
+    height,
+    className,
+  ]}
+>
+  <iframe
+    src={embedSrc}
+    title={markerTitle}
+    class="absolute inset-0 w-full h-full border-0"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+  <a
+    href={openSrc}
+    target="_blank"
+    rel="noopener"
+    class="absolute bottom-3 right-3 bg-warm-white/95 backdrop-blur border border-sand rounded-full px-3 py-1.5 text-[11px] font-bold text-espresso hover:text-clay transition-colors shadow-sm"
+  >
+    Open in Google Maps ↗
+  </a>
+</div>

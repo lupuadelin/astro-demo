@@ -1,0 +1,238 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import ApartmentCard from '../components/content/ApartmentCard.astro';
+import BookingBand from '../components/booking/BookingBand.astro';
+import DateRangePicker from '../components/booking/DateRangePicker.tsx';
+import GuestPicker from '../components/booking/GuestPicker.tsx';
+import Map from '../components/content/Map.astro';
+import ReviewsGrid from '../components/content/ReviewsGrid.astro';
+import LocationStats from '../components/content/LocationStats.astro';
+import { apartments, getApartmentPhotos, getComplexPhotos } from '../data/apartments';
+import { getReviews } from '../data/reviews';
+import { location } from '../data/location';
+
+const heroPhoto = getApartmentPhotos('deluxe-suite')[0];
+const complexPhotos = getComplexPhotos();
+const amenityBig = complexPhotos[0] ?? heroPhoto;
+const amenitySmall1 = complexPhotos[3] ?? getApartmentPhotos('studio-arch')[0];
+const amenitySmall2 = complexPhotos[7] ?? getApartmentPhotos('garden-residence')[0];
+const homeReviews = getReviews(3);
+
+const amenities = [
+  { icon: '❋', label: 'Heated pool' },
+  { icon: '☾', label: 'Finnish sauna' },
+  { icon: '◇', label: 'Gym' },
+  { icon: '✦', label: 'Sports courts' },
+  { icon: '◈', label: 'Indoor recreation' },
+  { icon: '❋', label: "Kids' play area" },
+];
+
+const values = [
+  {
+    title: 'Boutique service',
+    body: 'A named host, WhatsApp on the day, real answers — not a support inbox.',
+  },
+  {
+    title: 'Fully equipped',
+    body: 'Nespresso, filtered water, rainfall showers, blackout curtains, fast Wi-Fi. Everything you would ask for is already there.',
+  },
+  {
+    title: 'Resort amenities',
+    body: 'Heated pool, sauna, gym, sports courts, indoor rec and a kids’ play area — inside the complex, free for guests.',
+  },
+  {
+    title: 'Prime location',
+    body: 'A quiet residential enclave with quick access to the airport and the old town.',
+  },
+];
+---
+<Layout>
+
+  <!-- 01 · HERO -->
+  <section class="pt-14 md:pt-20 pb-24">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 items-center">
+        <!-- z-20 lifts the whole column above the .reveal-scale image column
+             (transform creates a stacking context that would otherwise trap the picker popover) -->
+        <div class="relative z-20">
+          <div class="reveal text-[13px] uppercase tracking-[0.22em] text-clay font-bold mb-6">
+            Boutique apartments · Bucharest
+          </div>
+          <h1
+            data-hero-h1
+            class="font-serif font-medium text-5xl md:text-[64px] leading-[1.04] tracking-tight max-w-[720px]"
+          >
+            A boutique stay, engineered like a hotel — <span class="hero-em italic text-clay font-medium">felt like a home.</span>
+          </h1>
+          <p class="reveal mt-7 max-w-xl text-lg text-muted leading-relaxed" style="--reveal-delay:600ms">
+            Elegant, resort-amenity short-term rentals in a residential Bucharest complex. Pool, sauna, gym — inside the door.
+          </p>
+
+          <!-- Booking overlay: real form — picker hidden inputs carry into /apartments as query params -->
+          <form
+            method="get"
+            action="/apartments"
+            class="reveal mt-10 bg-warm-white border border-sand rounded-2xl p-4 md:p-5 flex flex-col lg:flex-row gap-3 lg:items-stretch shadow-[0_1px_0_rgba(180,116,79,0.06)]"
+            style="--reveal-delay:800ms"
+          >
+            <DateRangePicker variant="hero" name="stay" client:load />
+            <div class="hidden lg:block w-px self-stretch bg-sand"></div>
+            <GuestPicker variant="inline" maxTotal={6} name="guests" client:load />
+            <button
+              type="submit"
+              class="shrink-0 whitespace-nowrap inline-flex items-center justify-center font-sans font-bold text-sm min-h-[48px] transition-all duration-300 ease-out bg-clay hover:bg-clay-hover text-white rounded-full px-7 py-3 hover:shadow-[0_10px_30px_-14px_rgba(107,122,93,0.55)] hover:-translate-y-0.5 lg:ml-2"
+            >
+              Check availability
+            </button>
+          </form>
+        </div>
+
+        <div class="reveal-scale relative" style="--reveal-delay:300ms">
+          <div
+            class="w-full max-w-[460px] mx-auto overflow-hidden bg-sand aspect-[4/5]"
+            style="border-radius: 50% 50% 16px 16px;"
+          >
+            {heroPhoto && (
+              <Image
+                src={heroPhoto}
+                alt="Deluxe Suite living room"
+                widths={[400, 700, 1000]}
+                sizes="(min-width: 1024px) 460px, 90vw"
+                loading="eager"
+                class="w-full h-full object-cover"
+              />
+            )}
+          </div>
+          <div class="absolute -left-4 -bottom-6 bg-warm-white border border-sand rounded-2xl px-5 py-3 shadow-sm hidden md:block">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-muted-soft font-bold">Rated</div>
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-2xl">4.94</span>
+              <span class="text-xs text-muted">/5 · 320+ stays</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- 02 · TRUST STRIP -->
+  <section class="border-y border-sand bg-warm-white">
+    <Container class="py-6 flex flex-wrap items-center justify-center md:justify-between gap-x-10 gap-y-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-clay-soft">★★★★★</span>
+        <span class="font-bold">4.94</span>
+        <span class="text-muted">on Airbnb & Booking</span>
+      </div>
+      <div class="text-muted"><span class="text-espresso font-bold">1,200+</span> guests hosted</div>
+      <div class="text-muted"><span class="text-espresso font-bold">Free cancellation</span> up to 48h</div>
+    </Container>
+  </section>
+
+  <!-- 03 · APARTMENT TEASER -->
+  <section class="py-24">
+    <Container>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <SectionHeading
+          eyebrow="Apartments"
+          title="Three sizes. One standard."
+          intro="Whether you are a solo traveller or a family of six, every apartment is finished, styled and stocked by the same hand."
+        />
+        <Button href="/apartments" variant="secondary">View all apartments</Button>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        {apartments.map((apt, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 120}ms`}>
+            <ApartmentCard apt={apt} />
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- 04 · AMENITIES HIGHLIGHT (typography-driven, no misleading photos) -->
+  <section class="py-16 md:py-24 bg-warm-white border-y border-sand">
+    <Container>
+      <SectionHeading
+        eyebrow="The complex"
+        title="Resort living, on your doorstep."
+        intro="Everything you would drive to a hotel for is one lift-ride away. Included with every stay."
+      />
+      <ul class="mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-sand border-y md:border md:border-sand rounded-none md:rounded-2xl">
+        {amenities.map((a) => (
+          <li class="reveal py-4 md:py-6 md:px-6 flex items-baseline gap-4">
+            <span class="font-serif text-clay text-3xl leading-none">{a.icon}</span>
+            <div>
+              <div class="font-serif text-xl">{a.label}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-8 md:mt-10">
+        <Button href="/complex" variant="tertiary">Explore the complex →</Button>
+      </div>
+    </Container>
+  </section>
+
+  <!-- 05 · WHY YAMALUXE -->
+  <section class="py-24">
+    <Container>
+      <SectionHeading
+        eyebrow="Why YamaLuxe"
+        title="What makes it feel different."
+        align="center"
+      />
+      <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {values.map((v, i) => (
+          <div
+            class="reveal lift border border-sand rounded-2xl p-7 bg-warm-white"
+            style={`--reveal-delay:${i * 110}ms`}
+          >
+            <div class="font-serif text-clay text-lg">0{i + 1}</div>
+            <div class="font-serif text-2xl mt-3">{v.title}</div>
+            <p class="mt-3 text-sm text-muted leading-relaxed">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- 06 · REVIEWS -->
+  <section class="py-24 bg-warm-white border-y border-sand">
+    <Container>
+      <SectionHeading
+        eyebrow="Guests"
+        title="What people say after they leave."
+        align="center"
+      />
+      <div class="mt-14">
+        <ReviewsGrid reviews={homeReviews} tone="bone" />
+      </div>
+    </Container>
+  </section>
+
+  <!-- 07 · LOCATION -->
+  <section class="py-24">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-2 items-center">
+        <div>
+          <SectionHeading
+            eyebrow="Location"
+            title="Residential calm, city on hand."
+            intro="A quiet complex on the edge of Bucharest with quick lines to the airport, the old town and the parks."
+          />
+          <LocationStats class="mt-10" columns={2} />
+        </div>
+        <Map lat={location.lat} lng={location.lng} zoom={14} height="aspect-[4/5] sm:aspect-square md:aspect-[4/3]" markerTitle={`YamaLuxe Apartments — ${location.addressShort}`} />
+      </div>
+    </Container>
+  </section>
+
+  <!-- 08 · BOOKING CTA BAND -->
+  <BookingBand />
+
+</Layout>

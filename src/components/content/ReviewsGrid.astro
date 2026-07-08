@@ -1,0 +1,25 @@
+---
+import type { Review } from '../../data/reviews';
+
+interface Props {
+  reviews: Review[];
+  tone?: 'bone' | 'warm';
+}
+
+const { reviews, tone = 'warm' } = Astro.props;
+const cardBg = tone === 'bone' ? 'bg-warm-white' : 'bg-bone';
+---
+<div class:list={["grid gap-6", reviews.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2']}>
+  {reviews.map((r, i) => (
+    <figure
+      class:list={[cardBg, "reveal lift border border-sand rounded-2xl p-7 flex flex-col"]}
+      style={`--reveal-delay:${i * 120}ms`}
+    >
+      <div class="text-clay-soft text-lg tracking-widest">{'★'.repeat(r.stars)}</div>
+      <blockquote class="mt-4 font-serif text-xl leading-snug flex-1">“{r.quote}”</blockquote>
+      <figcaption class="mt-5 text-xs uppercase tracking-[0.16em] text-muted-soft font-bold">
+        {r.author} <span class="text-clay">· {r.source}</span>
+      </figcaption>
+    </figure>
+  ))}
+</div>

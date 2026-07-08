@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import { getApartmentPhotos } from '../../data/apartments';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  photo?: ImageMetadata;
+  photoAlt?: string;
+}
+
+const defaultPhoto = getApartmentPhotos('deluxe-suite')[2] ?? getApartmentPhotos('deluxe-suite')[0];
+
+const {
+  eyebrow = 'Reserve your stay',
+  title = 'One quiet complex. Six standout apartments. Book direct — you always get the best rate.',
+  body = 'Live availability, instant confirmation, best-rate guarantee. You will never find a lower price on an OTA.',
+  primaryHref = '/apartments',
+  primaryLabel = 'See apartments',
+  secondaryHref = '/contact',
+  secondaryLabel = 'Talk to us →',
+  photo = defaultPhoto,
+  photoAlt = 'A YamaLuxe apartment',
+} = Astro.props;
+---
+<section id="booking" class="py-16">
+  <Container>
+    <div class="bg-espresso text-bone rounded-3xl overflow-hidden grid gap-10 lg:grid-cols-[1.1fr_0.9fr] p-8 md:p-14">
+      <div class="flex flex-col justify-center">
+        <div class="text-[11px] uppercase tracking-[0.22em] text-clay-soft font-bold mb-4">{eyebrow}</div>
+        <h2 class="font-serif font-medium text-4xl md:text-5xl leading-[1.05]">{title}</h2>
+        <p class="mt-6 max-w-lg text-cream/80">{body}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href={primaryHref} variant="primary">{primaryLabel}</Button>
+          <a href={secondaryHref} class="inline-flex items-center px-2 py-3 text-bone/80 hover:text-bone text-sm font-bold">{secondaryLabel}</a>
+        </div>
+      </div>
+      <div class="flex justify-center items-center">
+        <div class="w-full max-w-sm overflow-hidden bg-sand/20 rounded-2xl aspect-[4/5]">
+          {photo && (
+            <Image
+              src={photo}
+              alt={photoAlt}
+              widths={[300, 500, 700]}
+              sizes="(min-width: 1024px) 380px, 60vw"
+              class="w-full h-full object-cover"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
