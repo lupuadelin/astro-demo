@@ -29,28 +29,40 @@ const nav = [
   },
 ];
 ---
+
 <footer class="bg-espresso text-bone mt-24">
   <Container class="py-16">
     <div class="grid gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
       <div>
         <Logo tone="bone" size="md" />
         <p class="mt-6 max-w-sm text-sm text-cream/80 leading-relaxed">
-          A boutique stay, engineered like a hotel — felt like a home. Resort amenities in a residential complex in Bucharest.
+          A boutique stay, engineered like a hotel — felt like a home. Resort amenities in a
+          residential complex in Bucharest.
         </p>
       </div>
-      {nav.map((group) => (
-        <div>
-          <div class="text-[11px] uppercase tracking-[0.18em] text-clay-soft font-bold mb-4">{group.heading}</div>
-          <ul class="space-y-3 text-sm">
-            {group.items.map((item) => (
-              <li><a href={item.href} class="text-bone/80 hover:text-bone transition-colors">{item.label}</a></li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {
+        nav.map((group) => (
+          <div>
+            <div class="text-[11px] uppercase tracking-[0.18em] text-clay-soft font-bold mb-4">
+              {group.heading}
+            </div>
+            <ul class="space-y-3 text-sm">
+              {group.items.map((item) => (
+                <li>
+                  <a href={item.href} class="text-bone/80 hover:text-bone transition-colors">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
     </div>
 
-    <div class="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-cream/60">
+    <div
+      class="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-cream/60"
+    >
       <div>© {new Date().getFullYear()} YamaLuxe Apartments</div>
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-1 border border-white/15 rounded-full px-2 py-1">

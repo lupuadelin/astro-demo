@@ -16,8 +16,7 @@ export const reviews: Review[] = [
     apartmentSlug: 'deluxe-suite',
   },
   {
-    quote:
-      'Immaculate. The pool at sunset made the whole trip. Would book again in a heartbeat.',
+    quote: 'Immaculate. The pool at sunset made the whole trip. Would book again in a heartbeat.',
     author: 'Alex D.',
     source: 'Booking.com',
     stars: 5,
@@ -30,8 +29,7 @@ export const reviews: Review[] = [
     apartmentSlug: 'studio-arch',
   },
   {
-    quote:
-      'A calm, considered stay. Everything worked, everything was where you would put it.',
+    quote: 'A calm, considered stay. Everything worked, everything was where you would put it.',
     author: 'Marta & Ionuț',
     source: 'Airbnb',
     stars: 5,

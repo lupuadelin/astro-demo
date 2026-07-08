@@ -7,12 +7,31 @@ import Footer from '../components/layout/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  /** Path to an OG/Twitter card image, relative to /public (e.g. `/og/home.jpg`). */
+  image?: string;
+  /** OG type. Use `article` for single-property pages, `website` for the rest. */
+  type?: 'website' | 'article';
+  /** Set true to keep a page out of search indexes (e.g. thank-you, private pages). */
+  noindex?: boolean;
 }
+
 const {
   title = 'YamaLuxe Apartments — Boutique stays in Bucharest',
   description = 'Elegant, resort-amenity short-term rentals in a residential Bucharest complex. A boutique stay, engineered like a hotel — felt like a home.',
+  image = '/og-default.jpg',
+  type = 'website',
+  noindex = false,
 } = Astro.props;
+
+// Canonical URL is built from `site` (astro.config) + the current pathname.
+// Astro.site is undefined when `site` isn't set in config — guard so dev builds don't crash.
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : Astro.url.pathname;
+
+const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : image;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,12 +41,44 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:site_name" content="YamaLuxe" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+
+    <!-- Preload the two H1-critical Cormorant Garamond weights.
+         Because the H1 uses font-medium (500) with a nested italic emphasis,
+         these are the exact files a first paint needs. Preload puts them at
+         the top of the fetch queue so they arrive before first paint —
+         eliminates the fallback-then-swap "shrink" flicker entirely.
+         The rest (400/600, Mulish) load in via CSS as normal — nothing above
+         the fold needs them, so no preload budget wasted. -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&display=swap"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cormorant-garamond-latin-500-normal.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cormorant-garamond-latin-500-italic.woff2"
+      crossorigin
     />
     <ClientRouter />
   </head>

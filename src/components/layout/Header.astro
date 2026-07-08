@@ -10,29 +10,36 @@ const nav = [
 ];
 const currentPath = Astro.url.pathname;
 ---
+
 <header id="site-header" class="sticky top-0 z-40 bg-bone/85 backdrop-blur border-b border-sand">
   <Container class="flex items-center justify-between py-4">
     <Logo tone="clay" size="sm" />
 
     <!-- Desktop nav -->
     <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
-      {nav.map((item) => {
-        const active = currentPath === item.href || currentPath.startsWith(item.href + '/');
-        return (
-          <a
-            href={item.href}
-            class:list={[
-              'transition-colors',
-              active ? 'text-clay' : 'text-espresso hover:text-clay',
-            ]}
-          >{item.label}</a>
-        );
-      })}
+      {
+        nav.map((item) => {
+          const active = currentPath === item.href || currentPath.startsWith(item.href + '/');
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                'transition-colors',
+                active ? 'text-clay' : 'text-espresso hover:text-clay',
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
     </nav>
 
     <!-- Right actions -->
     <div class="flex items-center gap-2">
-      <div class="hidden sm:flex items-center gap-1 text-xs font-bold text-muted border border-sand rounded-full px-2 py-1">
+      <div
+        class="hidden sm:flex items-center gap-1 text-xs font-bold text-muted border border-sand rounded-full px-2 py-1"
+      >
         <span class="text-espresso">EN</span>
         <span aria-hidden="true">·</span>
         <span>RO</span>
@@ -50,10 +57,17 @@ const currentPath = Astro.url.pathname;
         aria-controls="mobile-menu"
         aria-expanded="false"
       >
-        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M1 1H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M1 7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M1 13H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <svg
+          width="20"
+          height="14"
+          viewBox="0 0 20 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path d="M1 1H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+          <path d="M1 7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+          <path d="M1 13H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
         </svg>
       </button>
     </div>
@@ -79,31 +93,50 @@ const currentPath = Astro.url.pathname;
         class="inline-flex items-center justify-center w-11 h-11 rounded-full border border-sand text-espresso hover:border-clay hover:text-clay transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-clay/40"
         aria-label="Close menu"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 2L14 14M14 2L2 14"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"></path>
         </svg>
       </button>
     </div>
 
     <!-- Nav links -->
     <nav class="flex-1 overflow-y-auto px-6 py-10 flex flex-col gap-2">
-      {nav.map((item, i) => {
-        const active = currentPath === item.href || currentPath.startsWith(item.href + '/');
-        return (
-          <a
-            href={item.href}
-            class:list={[
-              'mobile-menu-link block font-serif text-4xl leading-tight border-b border-sand pb-4 transition-colors',
-              active ? 'text-clay' : 'text-espresso hover:text-clay',
-            ]}
-            style={`--mm-delay:${i * 80}ms`}
-          >{item.label}</a>
-        );
-      })}
+      {
+        nav.map((item, i) => {
+          const active = currentPath === item.href || currentPath.startsWith(item.href + '/');
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                'mobile-menu-link block font-serif text-4xl leading-tight border-b border-sand pb-4 transition-colors',
+                active ? 'text-clay' : 'text-espresso hover:text-clay',
+              ]}
+              style={`--mm-delay:${i * 80}ms`}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
 
       <div class="mt-10">
-        <div class="text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold mb-3">Language</div>
-        <div class="inline-flex items-center gap-2 border border-sand rounded-full px-3 py-2 text-sm font-bold">
+        <div class="text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold mb-3">
+          Language
+        </div>
+        <div
+          class="inline-flex items-center gap-2 border border-sand rounded-full px-3 py-2 text-sm font-bold"
+        >
           <span class="text-espresso">EN</span>
           <span class="text-sand-strong" aria-hidden="true">·</span>
           <span class="text-muted">RO</span>
@@ -159,7 +192,8 @@ const currentPath = Astro.url.pathname;
       items.forEach((el, i) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(10px)';
-        el.style.transition = 'opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1)';
+        el.style.transition =
+          'opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1)';
         el.style.transitionDelay = `${80 + i * 70}ms`;
         requestAnimationFrame(() => {
           el.style.opacity = '1';

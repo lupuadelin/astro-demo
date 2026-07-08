@@ -18,8 +18,15 @@ const variants = {
 };
 const cls = `${base} ${variants[variant]} ${className}`;
 ---
-{href ? (
-  <a href={href} class={cls}><slot /></a>
-) : (
-  <button type="button" class={cls}><slot /></button>
-)}
+
+{
+  href ? (
+    <a href={href} class={cls}>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class={cls}>
+      <slot />
+    </button>
+  )
+}

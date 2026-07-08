@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Container from '../components/ui/Container.astro';
-import Button from '../components/ui/Button.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import BookingBand from '../components/booking/BookingBand.astro';
 import Map from '../components/content/Map.astro';
@@ -19,7 +18,11 @@ const bookingPhoto = photos[5] ?? photos[2];
 const poolChips = ['Heated to 28 °C', '25-metre lanes', 'Open 06:00 – 22:00', 'Towels provided'];
 const saunaChips = ['80 °C dry', '30-minute private slots', 'Two levels · cooling area'];
 const gymChips = ['05:30 – 23:00', 'Dumbbells to 40 kg', 'Two treadmills, one rower'];
-const courtsChips = ['Tennis, padel, basketball', 'Lit until 22:00', 'Rackets and balls at reception'];
+const courtsChips = [
+  'Tennis, padel, basketball',
+  'Lit until 22:00',
+  'Rackets and balls at reception',
+];
 const indoorChips = ['Table tennis, billiards', 'Board-game library', 'Coffee bar until 22:00'];
 const kidsChips = ['Soft play, ages 2 – 8', 'Outdoor climbing frame', 'Weekend film screenings'];
 
@@ -31,33 +34,46 @@ const extras = [
   'On-site laundry',
 ];
 ---
+
 <Layout title="The Complex — YamaLuxe">
-
   <!-- ============ HERO — text-only, editorial ============ -->
-  <section class="pt-12 md:pt-24 lg:pt-32 pb-10 md:pb-16">
+  <section class="pt-14 md:pt-20 pb-10 md:pb-16">
     <Container>
-      <div class="text-[12px] md:text-[13px] uppercase tracking-[0.22em] text-clay font-bold mb-5 md:mb-8">The complex</div>
+      <div class="text-[13px] uppercase tracking-[0.22em] text-clay font-bold mb-5">
+        The complex
+      </div>
 
-      <h1 class="reveal font-serif font-medium text-[40px] md:text-6xl lg:text-[80px] leading-[1.0] tracking-tight max-w-5xl">
-        A residential complex that behaves like a hotel.
+      <h1
+        class="reveal font-serif font-medium text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl"
+      >
+        A residential complex that <em class="italic text-clay font-medium"
+          >behaves like a hotel.</em
+        >
       </h1>
 
       <div class="mt-6 md:mt-10 max-w-xl text-base md:text-lg text-muted leading-relaxed">
-        Six amenity spaces, one lift ride from your bed. All included with your stay — no day passes, no wristbands, nothing to add at checkout.
+        Six amenity spaces, one lift ride from your bed. All included with your stay — no day
+        passes, no wristbands, nothing to add at checkout.
       </div>
 
-      <div class="mt-10 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-t border-sand pt-8 md:pt-10">
-        {[
-          { label: 'Amenity spaces', value: '6' },
-          { label: 'Included', value: 'All of them' },
-          { label: 'Reception', value: '24 / 7' },
-          { label: 'Booking required', value: 'Sauna & courts' },
-        ].map((s) => (
-          <div class="reveal">
-            <div class="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-muted-soft font-bold">{s.label}</div>
-            <div class="font-serif text-xl md:text-2xl mt-1.5 md:mt-2">{s.value}</div>
-          </div>
-        ))}
+      <div
+        class="mt-10 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-t border-sand pt-8 md:pt-10"
+      >
+        {
+          [
+            { label: 'Amenity spaces', value: '6' },
+            { label: 'Included', value: 'All of them' },
+            { label: 'Reception', value: '24 / 7' },
+            { label: 'Booking required', value: 'Sauna & courts' },
+          ].map((s) => (
+            <div class="reveal">
+              <div class="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-muted-soft font-bold">
+                {s.label}
+              </div>
+              <div class="font-serif text-xl md:text-2xl mt-1.5 md:mt-2">{s.value}</div>
+            </div>
+          ))
+        }
       </div>
     </Container>
   </section>
@@ -65,16 +81,20 @@ const extras = [
   <!-- ============ ESTABLISHING IMAGE (moved above the quote) ============ -->
   <section class="pt-4 md:pt-8 pb-2 md:pb-4">
     <Container>
-      <div class="reveal-scale rounded-3xl overflow-hidden bg-sand aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9]">
-        {atmospherePhoto && (
-          <Image
-            src={atmospherePhoto}
-            alt="Inside YamaLuxe"
-            widths={[500, 800, 1200, 1600, 1920]}
-            sizes="(min-width: 1024px) 1120px, 100vw"
-            class="w-full h-full object-cover"
-          />
-        )}
+      <div
+        class="reveal-scale rounded-3xl overflow-hidden bg-sand aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9]"
+      >
+        {
+          atmospherePhoto && (
+            <Image
+              src={atmospherePhoto}
+              alt="Inside YamaLuxe"
+              widths={[500, 800, 1200, 1600, 1920]}
+              sizes="(min-width: 1024px) 1120px, 100vw"
+              class="w-full h-full object-cover"
+            />
+          )
+        }
       </div>
     </Container>
   </section>
@@ -82,10 +102,18 @@ const extras = [
   <!-- ============ PULL QUOTE (now lands after the image, works as caption) ============ -->
   <section class="py-10 md:py-24">
     <Container>
-      <blockquote class="reveal max-w-4xl font-serif text-2xl md:text-[44px] leading-[1.2] md:leading-[1.15] text-espresso text-balance">
-        <span class="text-sand-strong font-serif text-5xl md:text-6xl leading-none align-top mr-2">“</span>Most rentals give you a bed and a Wi-Fi password. We wanted to give you the pool at sunset, too — without asking you to pay for it twice.
+      <blockquote
+        class="reveal max-w-4xl font-serif text-2xl md:text-[44px] leading-[1.2] md:leading-[1.15] text-espresso text-balance"
+      >
+        <span class="text-sand-strong font-serif text-5xl md:text-6xl leading-none align-top mr-2"
+          >“</span
+        >Most rentals give you a bed and a Wi-Fi password. We wanted to give you the pool at sunset,
+        too — without asking you to pay for it twice.
       </blockquote>
-      <div class="reveal mt-5 md:mt-6 text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold" style="--reveal-delay:120ms">
+      <div
+        class="reveal mt-5 md:mt-6 text-[11px] uppercase tracking-[0.22em] text-muted-soft font-bold"
+        style="--reveal-delay:120ms"
+      >
         — Ioana, host
       </div>
     </Container>
@@ -95,17 +123,32 @@ const extras = [
   <section class="py-14 md:py-24 bg-warm-white border-y border-sand">
     <Container>
       <div class="max-w-4xl">
-        <div class="reveal text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3 md:mb-4">01 · The pool</div>
-        <h2 class="reveal font-serif font-medium text-4xl md:text-[68px] leading-[1.02] mb-5 md:mb-8" style="--reveal-delay:80ms">
+        <div
+          class="reveal text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3 md:mb-4"
+        >
+          01 · The pool
+        </div>
+        <h2
+          class="reveal font-serif font-medium text-4xl md:text-[68px] leading-[1.02] mb-5 md:mb-8"
+          style="--reveal-delay:80ms"
+        >
           Twenty-five metres of it. Yours.
         </h2>
-        <p class="reveal text-muted leading-relaxed max-w-xl text-base md:text-lg" style="--reveal-delay:160ms">
-          Heated year-round to 28 °C. Six cabana chairs on the sun deck, a shallow-end lane for laps. Quietest between 06:00 and 10:00.
+        <p
+          class="reveal text-muted leading-relaxed max-w-xl text-base md:text-lg"
+          style="--reveal-delay:160ms"
+        >
+          Heated year-round to 28 °C. Six cabana chairs on the sun deck, a shallow-end lane for
+          laps. Quietest between 06:00 and 10:00.
         </p>
         <ul class="reveal mt-6 md:mt-10 flex flex-wrap gap-2" style="--reveal-delay:240ms">
-          {poolChips.map((c) => (
-            <li class="border border-sand rounded-full px-3.5 md:px-4 py-1.5 md:py-2 text-xs font-semibold text-espresso bg-bone">{c}</li>
-          ))}
+          {
+            poolChips.map((c) => (
+              <li class="border border-sand rounded-full px-3.5 md:px-4 py-1.5 md:py-2 text-xs font-semibold text-espresso bg-bone">
+                {c}
+              </li>
+            ))
+          }
         </ul>
       </div>
     </Container>
@@ -116,28 +159,37 @@ const extras = [
     <Container>
       <div class="grid gap-6 md:grid-cols-2 md:gap-24 items-start">
         <article class="reveal border-t border-sand pt-6 md:pt-8">
-          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">02 · Bathhouse</div>
-          <h2 class="font-serif font-medium text-3xl md:text-5xl leading-[1.05] md:leading-[1.02]">Finnish sauna</h2>
+          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">
+            02 · Bathhouse
+          </div>
+          <h2 class="font-serif font-medium text-3xl md:text-5xl leading-[1.05] md:leading-[1.02]">
+            Finnish sauna
+          </h2>
           <p class="mt-4 md:mt-5 text-muted leading-relaxed max-w-md text-base">
-            Cedar-lined, two levels, a cooling area next door. Bookable in private slots at the desk, or open-use during off-peak.
+            Cedar-lined, two levels, a cooling area next door. Bookable in private slots at the
+            desk, or open-use during off-peak.
           </p>
           <ul class="mt-6 md:mt-8 divide-y divide-sand text-sm">
-            {saunaChips.map((c) => (
-              <li class="py-2.5 md:py-3 text-espresso font-medium">{c}</li>
-            ))}
+            {saunaChips.map((c) => <li class="py-2.5 md:py-3 text-espresso font-medium">{c}</li>)}
           </ul>
         </article>
 
-        <article class="reveal md:mt-16 border-t border-sand pt-6 md:pt-8" style="--reveal-delay:140ms">
-          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">03 · Training</div>
-          <h2 class="font-serif font-medium text-3xl md:text-5xl leading-[1.05] md:leading-[1.02]">The gym.</h2>
+        <article
+          class="reveal md:mt-16 border-t border-sand pt-6 md:pt-8"
+          style="--reveal-delay:140ms"
+        >
+          <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">
+            03 · Training
+          </div>
+          <h2 class="font-serif font-medium text-3xl md:text-5xl leading-[1.05] md:leading-[1.02]">
+            The gym.
+          </h2>
           <p class="mt-4 md:mt-5 text-muted leading-relaxed max-w-md text-base">
-            Racks, dumbbells and a rower. Nothing gimmicky — everything you would actually use, room to move between them.
+            Racks, dumbbells and a rower. Nothing gimmicky — everything you would actually use, room
+            to move between them.
           </p>
           <ul class="mt-6 md:mt-8 divide-y divide-sand text-sm">
-            {gymChips.map((c) => (
-              <li class="py-2.5 md:py-3 text-espresso font-medium">{c}</li>
-            ))}
+            {gymChips.map((c) => <li class="py-2.5 md:py-3 text-espresso font-medium">{c}</li>)}
           </ul>
         </article>
       </div>
@@ -147,16 +199,20 @@ const extras = [
   <!-- ============ MIDPOINT BREATH IMAGE (between Training and Play) ============ -->
   <section class="pb-4 md:pb-8">
     <Container>
-      <div class="reveal-scale rounded-2xl overflow-hidden bg-sand aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/8] lg:aspect-[3/1]">
-        {midpointPhoto && (
-          <Image
-            src={midpointPhoto}
-            alt="A YamaLuxe apartment"
-            widths={[500, 900, 1400, 1920]}
-            sizes="(min-width: 1024px) 1120px, 100vw"
-            class="w-full h-full object-cover"
-          />
-        )}
+      <div
+        class="reveal-scale rounded-2xl overflow-hidden bg-sand aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/8] lg:aspect-[3/1]"
+      >
+        {
+          midpointPhoto && (
+            <Image
+              src={midpointPhoto}
+              alt="A YamaLuxe apartment"
+              widths={[500, 900, 1400, 1920]}
+              sizes="(min-width: 1024px) 1120px, 100vw"
+              class="w-full h-full object-cover"
+            />
+          )
+        }
       </div>
     </Container>
   </section>
@@ -165,8 +221,13 @@ const extras = [
   <section class="py-14 md:py-24 bg-warm-white border-y border-sand">
     <Container>
       <div class="max-w-2xl">
-        <div class="reveal text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">04 · Play</div>
-        <h2 class="reveal font-serif font-medium text-3xl md:text-5xl leading-[1.05]" style="--reveal-delay:100ms">
+        <div class="reveal text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">
+          04 · Play
+        </div>
+        <h2
+          class="reveal font-serif font-medium text-3xl md:text-5xl leading-[1.05]"
+          style="--reveal-delay:100ms"
+        >
           For the courts and the rainy days.
         </h2>
       </div>
@@ -175,27 +236,39 @@ const extras = [
         <article class="reveal border-t border-sand pt-5 md:pt-6" style="--reveal-delay:0ms">
           <h3 class="font-serif text-2xl md:text-3xl">Sports courts</h3>
           <ul class="mt-4 flex flex-wrap gap-2">
-            {courtsChips.map((c) => (
-              <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">{c}</li>
-            ))}
+            {
+              courtsChips.map((c) => (
+                <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">
+                  {c}
+                </li>
+              ))
+            }
           </ul>
         </article>
 
         <article class="reveal border-t border-sand pt-5 md:pt-6" style="--reveal-delay:100ms">
           <h3 class="font-serif text-2xl md:text-3xl">Indoor recreation</h3>
           <ul class="mt-4 flex flex-wrap gap-2">
-            {indoorChips.map((c) => (
-              <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">{c}</li>
-            ))}
+            {
+              indoorChips.map((c) => (
+                <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">
+                  {c}
+                </li>
+              ))
+            }
           </ul>
         </article>
 
         <article class="reveal border-t border-sand pt-5 md:pt-6" style="--reveal-delay:200ms">
           <h3 class="font-serif text-2xl md:text-3xl">Kids' area</h3>
           <ul class="mt-4 flex flex-wrap gap-2">
-            {kidsChips.map((c) => (
-              <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">{c}</li>
-            ))}
+            {
+              kidsChips.map((c) => (
+                <li class="border border-sand rounded-full px-3 py-1.5 text-xs font-semibold text-espresso bg-bone">
+                  {c}
+                </li>
+              ))
+            }
           </ul>
         </article>
       </div>
@@ -206,23 +279,29 @@ const extras = [
   <section class="py-10 md:py-16">
     <Container>
       <div class="border-y border-sand py-8 md:py-10">
-        <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">Also included</div>
+        <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-4">
+          Also included
+        </div>
 
         <!-- Mobile: stacked, dividers -->
         <ul class="md:hidden divide-y divide-sand">
-          {extras.map((e) => (
-            <li class="py-2.5 font-serif text-xl leading-snug text-espresso">{e}</li>
-          ))}
+          {
+            extras.map((e) => (
+              <li class="py-2.5 font-serif text-xl leading-snug text-espresso">{e}</li>
+            ))
+          }
         </ul>
 
         <!-- Desktop: inline serif with dot separators -->
         <p class="hidden md:block font-serif text-2xl md:text-3xl leading-snug text-espresso">
-          {extras.map((e, i) => (
-            <>
-              {e}
-              {i < extras.length - 1 && <span class="text-sand-strong mx-3">·</span>}
-            </>
-          ))}
+          {
+            extras.map((e, i) => (
+              <>
+                {e}
+                {i < extras.length - 1 && <span class="text-sand-strong mx-3">·</span>}
+              </>
+            ))
+          }
         </p>
       </div>
     </Container>
@@ -240,7 +319,13 @@ const extras = [
           />
           <LocationStats class="mt-10" columns={2} />
         </div>
-        <Map lat={location.lat} lng={location.lng} zoom={14} height="aspect-[4/5] sm:aspect-square md:aspect-[16/11]" markerTitle="The YamaLuxe complex" />
+        <Map
+          lat={location.lat}
+          lng={location.lng}
+          zoom={14}
+          height="aspect-[4/5] sm:aspect-square md:aspect-[16/11]"
+          markerTitle="The YamaLuxe complex"
+        />
       </div>
     </Container>
   </section>
@@ -251,5 +336,4 @@ const extras = [
     photo={bookingPhoto}
     photoAlt="A view inside the complex"
   />
-
 </Layout>

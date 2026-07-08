@@ -81,7 +81,9 @@ export default function GuestPicker({
         aria-expanded={open}
         aria-haspopup="dialog"
       >
-        <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mb-1">Guests</span>
+        <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-soft font-bold mb-1">
+          Guests
+        </span>
         <span className="block text-espresso font-semibold text-sm truncate">{summary}</span>
       </button>
 
@@ -114,11 +116,21 @@ export default function GuestPicker({
                     <div className="text-xs text-muted-soft">{g.sub}</div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Stepper aria-label={`Decrease ${g.label}`} disabled={atMin} onClick={() => step(g.key, -1)}>
+                    <Stepper
+                      aria-label={`Decrease ${g.label}`}
+                      disabled={atMin}
+                      onClick={() => step(g.key, -1)}
+                    >
                       –
                     </Stepper>
-                    <span className="w-6 text-center font-semibold text-sm tabular-nums">{value}</span>
-                    <Stepper aria-label={`Increase ${g.label}`} disabled={atMax} onClick={() => step(g.key, +1)}>
+                    <span className="w-6 text-center font-semibold text-sm tabular-nums">
+                      {value}
+                    </span>
+                    <Stepper
+                      aria-label={`Increase ${g.label}`}
+                      disabled={atMax}
+                      onClick={() => step(g.key, +1)}
+                    >
                       +
                     </Stepper>
                   </div>
