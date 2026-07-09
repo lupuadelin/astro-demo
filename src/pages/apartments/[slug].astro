@@ -141,7 +141,7 @@ const aptReviews = getReviews(2, apt.slug);
   <!-- 02 · TITLE + SPECS + STICKY BOOKING -->
   <section class="pb-24">
     <Container>
-      <div class="grid gap-10 lg:grid-cols-[1.4fr_0.9fr] lg:gap-16">
+      <div class="grid gap-10 lg:grid-cols-[1.4fr_0.9fr] lg:gap-24 xl:gap-28">
         <div>
           <div class="text-[11px] uppercase tracking-[0.22em] text-clay font-bold mb-3">
             {apt.type} · Bucharest
@@ -233,8 +233,10 @@ const aptReviews = getReviews(2, apt.slug);
             </div>
             <form class="mt-5 space-y-3">
               <DateRangePicker variant="stack" client:visible align="right" />
-              <GuestPicker variant="field" maxTotal={apt.guests} align="right" client:visible />
-              <Button variant="primary" class="w-full">Reserve now</Button>
+              <div class="pt-3">
+                <GuestPicker variant="field" maxTotal={apt.guests} align="right" client:visible />
+              </div>
+              <Button variant="primary" class="pt-4 w-full">Reserve now</Button>
               <p class="text-[11px] text-muted-soft text-center">
                 You will not be charged yet — availability check first.
               </p>
