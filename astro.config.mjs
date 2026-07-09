@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // Public base URL — drives canonical links, OG absolute URLs, and sitemap.xml entries.
 // Update to the real production hostname before launch.
 const SITE = 'https://yamaluxe.com';
@@ -19,4 +21,5 @@ export default defineConfig({
   },
 
   integrations: [react(), sitemap()],
+  adapter: cloudflare(),
 });
